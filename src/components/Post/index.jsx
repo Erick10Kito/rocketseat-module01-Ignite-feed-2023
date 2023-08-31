@@ -29,6 +29,9 @@ export function Post({ author, publishedAt, content }) {
   function handleNewCommentChange() {
     setNewCommentText(event.target.value);
   }
+  function deleteComment(comment) {
+    console.log(`Deletar comentario ${comment}`);
+  }
   return (
     <article className={styles.post}>
       <header>
@@ -54,10 +57,8 @@ export function Post({ author, publishedAt, content }) {
             return <p key={line.content}>{line.content}</p>;
           } else if (line.type === "link") {
             return (
-              <p>
-                <a href="#" key={line.content}>
-                  {line.content}
-                </a>
+              <p key={line.content}>
+                <a href="#">{line.content}</a>
               </p>
             );
           }
@@ -78,7 +79,13 @@ export function Post({ author, publishedAt, content }) {
       </form>
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comment key={comment} content={comment} />;
+          return (
+            <Comment
+              key={comment}
+              content={comment}
+              onDeleteComment={deleteComment}
+            />
+          );
         })}
       </div>
     </article>
